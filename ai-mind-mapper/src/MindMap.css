@@ -24,7 +24,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none;
   z-index: 0;
 }
 
@@ -77,20 +76,20 @@ button:hover {
 .controls {
   margin-bottom: 10px;
 }
-.connections {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  /* Remove pointer-events: none; */
-  z-index: 0;
+
+.delete-icon {
+  width: 24px;
+  height: 24px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 24px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.dashboard {
-  position: absolute;
-  background-color: white;
-  padding: 10px;
-  border: 1px solid #ccc;
-  z-index: 100;
+.delete-icon:hover {
+  background-color: #f0f0f0;
 }

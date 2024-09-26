@@ -43,10 +43,7 @@ function MindMap() {
 
   const handleLineClick = (e, connection) => {
     e.stopPropagation();
-    const mindmapRect = mindmapRef.current.getBoundingClientRect();
-    const x = (e.clientX - mindmapRect.left) / zoom;
-    const y = (e.clientY - mindmapRect.top) / zoom;
-    setSelectedConnection({ ...connection, position: { x, y } });
+    setSelectedConnection(connection);
   };
 
   const deleteConnection = () => {
@@ -98,9 +95,6 @@ function MindMap() {
               to: targetNode.id,
             };
             setConnections([...connections, newConnection]);
-          } else {
-            // Provide feedback to the user
-            
           }
         }
         setTempLine(null);
@@ -137,18 +131,55 @@ function MindMap() {
             const fromNode = nodes.find((node) => node.id === connection.from);
             const toNode = nodes.find((node) => node.id === connection.to);
             if (!fromNode || !toNode) return null;
+            const isSelected = selectedConnection && selectedConnection.id === connection.id;
+            const x1 = fromNode.position.x + 50;
+            const y1 = fromNode.position.y + 50;
+            const x2 = toNode.position.x + 50;
+            const y2 = toNode.position.y + 50;
+            const midX = (x1 + x2) / 2;
+            const midY = (y1 + y2) / 2;
+
             return (
-              <line
+              <g
                 key={connection.id}
-                x1={fromNode.position.x + 50}
-                y1={fromNode.position.y + 50}
-                x2={toNode.position.x + 50}
-                y2={toNode.position.y + 50}
-                stroke="red"
-                strokeWidth="2"
                 onClick={(e) => handleLineClick(e, connection)}
-                style={{ cursor: 'pointer', pointerEvents: 'visibleStroke' }}
-              />
+                style={{ cursor: 'pointer', pointerEvents: 'stroke' }}
+              >
+                <line
+                  x1={x1}
+                  y1={y1}
+                  x2={x2}
+                  y2={y2}
+                  stroke="transparent"
+                  strokeWidth="10"
+                />
+                <line
+                  x1={x1}
+                  y1={y1}
+                  x2={x2}
+                  y2={y2}
+                  stroke={isSelected ? 'blue' : 'red'}
+                  strokeWidth="2"
+                />
+                {isSelected && (
+                  <foreignObject
+                    x={midX - 15}
+                    y={midY - 15}
+                    width={30}
+                    height={30}
+                  >
+                    <div
+                      className="delete-icon"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteConnection();
+                      }}
+                    >
+                      ❌
+                    </div>
+                  </foreignObject>
+                )}
+              </g>
             );
           })}
           {tempLine && (
@@ -175,27 +206,6 @@ function MindMap() {
           />
         ))}
       </div>
-      {selectedConnection && (
-        <div
-          className="dashboard"
-          style={{
-            position: 'absolute',
-            left: selectedConnection.position.x * zoom,
-            top: selectedConnection.position.y * zoom,
-            backgroundColor: 'white',
-            padding: '10px',
-            border: '1px solid #ccc',
-            zIndex: 100,
-          }}
-        >
-          <p>
-            Connection from Node {selectedConnection.from} to Node{' '}
-            {selectedConnection.to}
-          </p>
-          <button onClick={deleteConnection}>Delete Connection</button>
-          <button onClick={() => setSelectedConnection(null)}>Close</button>
-        </div>
-      )}
     </div>
   );
 }
