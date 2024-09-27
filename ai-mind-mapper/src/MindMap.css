@@ -6,10 +6,43 @@
   background-color: #000;
 }
 
+.main-content {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #111;
+  padding: 10px;
+  color: #fff;
+  overflow-y: auto;
+}
+
+.sidebar h3 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.idea-card {
+  background-color: #222;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  cursor: grab;
+  color: #fff;
+  text-align: center;
+  word-wrap: break-word;
+}
+
+.idea-card:active {
+  cursor: grabbing;
+}
+
 .mindmap {
   position: relative;
-  width: 80%;
-  height: 80%;
+  flex-grow: 1;
   margin-top: 20px;
   border: 2px solid #333;
   border-radius: 15px;
@@ -30,26 +63,30 @@
 .node {
   position: absolute;
   z-index: 1;
-  width: 100px;
-  height: 100px;
-  background: #fff;
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #00ffea, #00b8a9);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   text-align: center;
   cursor: pointer;
   border-radius: 50%;
   transition: transform 0.3s, box-shadow 0.3s;
-  border: 1px solid transparent;
+  border: 2px solid #fff;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+  color: #000;
   user-select: none;
+  padding: 10px;
+  word-wrap: break-word;
 }
 
 .node:hover {
   transform: scale(1.1);
-  box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
-  border-color: rgba(255, 0, 0, 0.7);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 1);
+  border-color: rgba(255, 255, 255, 0.7);
 }
 
 .selected {
@@ -93,3 +130,23 @@ button:hover {
 .delete-icon:hover {
   background-color: #f0f0f0;
 }
+
+.loading {
+  text-align: center;
+  color: #fff;
+}
+
+input[type='text'] {
+  padding: 10px;
+  margin-right: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+input[type='text']:focus {
+  outline: none;
+  border-color: #00ffea;
+  box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+}
+
